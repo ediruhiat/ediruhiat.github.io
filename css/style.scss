@@ -1,0 +1,437 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 0.03rem;
+  color: #222;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fcfcfc;
+  overflow-x: hidden;
+}
+
+@mixin two-column {
+  height: 100vh;
+  width: 100%;
+
+  padding: 1.5rem 3rem 0 3rem;
+
+  display: grid;
+}
+
+#hero .hero {
+  @include two-column();
+
+  grid-template-columns: 4fr 3fr;
+
+  background-color: #eee;
+
+  .profile {
+    position: relative;
+    height: 100%;
+    img {
+      position: absolute;
+      bottom: 0;
+      width: 80%;
+    }
+  }
+
+  .call-to-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: #222;
+
+    height: 100%;
+
+    strong {
+      font-size: 64px;
+    }
+
+    small {
+      color: #444;
+      font-size: 32px;
+    }
+
+    button {
+      border-radius: 5px;
+      border: 1px solid #222;
+
+      margin-top: 1rem;
+
+      height: 45px;
+      width: 100%;
+
+      font-family: "Open Sans", sans-serif;
+      font-size: 16px;
+
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: #eee;
+        background-color: rgb(45, 94, 255);
+        border: 1px solid rgb(45, 94, 255);
+        box-shadow: 0px 2px 10px 1px rgba($color: #000000, $alpha: 0.2);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .social-links {
+      position: absolute;
+      bottom: 1rem;
+      right: 3rem;
+
+      display: flex;
+      column-gap: 1.5rem;
+
+      font-size: 24px;
+
+      a i:hover {
+        color: #777;
+      }
+    }
+  }
+}
+
+#about .about-container {
+  display: flex;
+  align-items: center;
+
+  @include two-column();
+
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 4fr;
+    column-gap: 10%;
+    row-gap: 2rem;
+
+    .txt-about-me-container {
+      grid-column: 1/3;
+
+      strong {
+        font-size: 64px;
+      }
+    }
+
+    .about-me {
+      display: flex;
+      flex-direction: column;
+
+      grid-row-start: 2/3;
+      grid-column-start: 1/2;
+      row-gap: 1.5rem;
+
+      small {
+        color: rgb(0, 81, 255);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-family: "Open Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: calc(14px * 1.68);
+      }
+    }
+
+    .skills {
+      grid-row-start: 2/3;
+      grid-column-start: 2/3;
+
+      .skill {
+        margin-bottom: 1rem;
+        .skill-container {
+          width: 100%;
+          height: 6px;
+          background-color: #bebebe;
+          margin-bottom: 0.3rem;
+
+          @mixin skill-progress {
+            height: 6px;
+            background-color: #222;
+          }
+
+          .skill-progress {
+            @include skill-progress();
+
+            &#js {
+              width: 70%;
+            }
+
+            &#wp {
+              width: 80%;
+            }
+
+            &#react {
+              width: 65%;
+            }
+
+            &#node {
+              width: 75%;
+            }
+          }
+        }
+
+        small {
+          text-transform: uppercase;
+          font-weight: 500;
+          font-size: 13px;
+          font-family: "Share Tech Mono", monospace;
+          color: #222;
+
+          span {
+            color: #555;
+          }
+        }
+      }
+    }
+  }
+}
+
+#portfolio {
+  .portfolio-container {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    .portfolio {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.5rem;
+
+      .grid-item {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+
+          transition: all 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.4;
+            transform: scale(1.03);
+          }
+        }
+      }
+    }
+  }
+
+  .modal {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
+
+  .modal-content,
+  #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+
+  @-webkit-keyframes zoom {
+    from {
+      -webkit-transform: scale(0);
+    }
+    to {
+      -webkit-transform: scale(1);
+    }
+  }
+
+  @keyframes zoom {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+#counter {
+  .counter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20%;
+
+    background-color: #fff;
+
+    width: 100%;
+    height: 30vh;
+    .grid-item-counter {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      strong {
+        font-size: 32px;
+      }
+
+      small {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 14px;
+        text-transform: uppercase;
+
+        color: #777;
+      }
+    }
+  }
+}
+
+#work {
+  .work-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2rem;
+    text-align: center;
+
+    background-image: url("../img/work.svg");
+    background-size: 600px;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+
+    width: 100%;
+    height: 75vh;
+
+    strong {
+      display: block;
+      font-size: 64px;
+      width: 50%;
+    }
+
+    button {
+      width: 200px;
+      height: 45px;
+
+      border-radius: 45px;
+      border: 1px solid #222;
+
+      background-color: transparent;
+
+      font-family: "Open Sans", sans-serif;
+      font-size: 16px;
+
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: #eee;
+        background-color: rgb(45, 94, 255);
+        border: 1px solid rgb(45, 94, 255);
+        box-shadow: 0px 2px 10px 1px rgba($color: #000000, $alpha: 0.2);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+#tech {
+  .tech-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20%;
+
+    background-color: #fff;
+
+    width: 100%;
+    height: 30vh;
+
+    img {
+      width: 40px;
+      height: 40px;
+      opacity: 0.8;
+    }
+  }
+}
+
+footer {
+  background-color: #eee;
+  display: flex;
+
+  width: 100%;
+  height: 15vh;
+
+  padding: 1.5rem;
+
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: "Open Sans", sans-serif;
+
+  strong {
+    font-size: 16px;
+  }
+
+  .copyright {
+    font-size: 12px;
+  }
+
+  .social-links {
+    display: flex;
+    column-gap: 1.5rem;
+
+    font-size: 16px;
+  }
+}
+
+@import "responsive";
